@@ -6,7 +6,7 @@ var windEl = $("#wind");
 var uvEl = $("#UV");
 var imgEl=$("#wicon");
 var uvSpanEl=$("#uvspan");
-var forecast=$("#forecast");
+var forecast=$(".forecast");
 var apiKey= "dc73b9f2be92cd0a2da9c582e9770b1c";
 var city="mississauga";
 var requestUrl= "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid="+ apiKey; //API URL for the openweather API.
