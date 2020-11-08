@@ -6,6 +6,7 @@ var windEl = $("#wind");
 var uvEl = $("#UV");
 var imgEl=$("#wicon");
 var uvSpanEl=$("#uvspan");
+var forecast=$("#forecast");
 var apiKey= "dc73b9f2be92cd0a2da9c582e9770b1c";
 var city="mississauga";
 var requestUrl= "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid="+ apiKey; //API URL for the openweather API.
@@ -55,15 +56,34 @@ $(document).ready(function() {
                 }
             })
             var cityId= data.id;
-            var futureUrl= "https://api.openweathermap.org/data/2.5/forecast/daily?id="+cityId+"&cnt=5&appid="+apiKey;
+            var futureUrl= "https://api.openweathermap.org/data/2.5/forecast?id="+cityId+"&appid="+apiKey;
             fetch(futureUrl)
-            .then(function(response) {
-                console.log ("future forecast has a "+response);
-                return response;
+            .then(function (response) {
+                console.log (response);
+                return response.json();
             })
             .then(function(data) {
                 console.log(data);
-                return data;
+                for (i=0;i<forecast.length;i++) {
+                    var forecastIndex = i*8+4;
+                    var indexDate=new Date(data.list[forecastIndex].dt*1000);
+                    console.log(indexDate);
+                    var futureDay = indexDate.getDate();
+                    var futureMonth = indexDate.getMonth() + 1;
+                    var futureYear = indexDate.getFullYear();
+                    var forecastDate = $("<p>");
+                    var forecastImg = $("<img>");
+                    var forecastTemp = $("<p>");
+                    var forecastHum=$("<p>");
+                    forecastDate.text(futureDay+futureMonth+futureYear);
+                    forecastImg.attr("src", "https://openweathermap.org/img/wn/"+data.list[forecastIndex].weather[0].icon+".png");
+                    forecastImg.attr("alt", data.list[forecastIndex].weather[0].description);
+                    forecastTemp.text("Temperature: "+Math.round((((data.list[forecastIndex].temp-273.15)*1.8)+32)*10)/10 + "°F");
+                    forecastHum.text("Humidity: "+data.list[forecastIndex].humidity + "%");
+                    $(".forecast").each(function () {
+                        $(this).append(forecastDate,forecastImg,forecastTemp,forecastHum);
+                    })
+                }
             })
         })
         
