@@ -4,6 +4,7 @@ var temperatureEl = $("#temperature");
 var humidityEl = $("#humidity");
 var windEl = $("#wind");
 var uvEl = $("#UV");
+var imgEl=$("#weathericon");
 var uvSpanEl=$("#uvspan");
 var apiKey= "dc73b9f2be92cd0a2da9c582e9770b1c";
 var city="mississauga";
@@ -50,7 +51,7 @@ $(document).ready(function() {
                 }
             })
             var cityId= data.id;
-            var futureUrl= "https://api.openweathermap.org/data/2.5/forecast/daily?id=524901&appid="+apiKey;
+            var futureUrl= "https://api.openweathermap.org/data/2.5/forecast?id="+cityId+"&appid="+apiKey;
             fetch(futureUrl)
             .then(function(response) {
                 console.log ("future forecast has a "+response);
