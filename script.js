@@ -55,7 +55,7 @@ $(document).ready(function() {
                 }
             })
             var cityId= data.id;
-            var futureUrl= "https://api.openweathermap.org/data/2.5/forecast?id="+cityId+"&appid="+apiKey;
+            var futureUrl= "https://api.openweathermap.org/data/2.5/forecast/daily?id="+cityId+"&cnt=5&appid="+apiKey;
             fetch(futureUrl)
             .then(function(response) {
                 console.log ("future forecast has a "+response);
