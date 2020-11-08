@@ -1,0 +1,27 @@
+body {
+    font-family: 'Roboto', sans-serif;
+}
+nav {
+    color: white;
+    font-size: 10px;
+    padding: 10px;
+}
+.title{
+    text-align: center;
+}
+
+.lowuv {
+    background-color: lightgreen;
+}
+
+.moderateuv {
+    background-color: yellow;
+}
+
+.highuv {
+    background-color: orange;
+}
+
+.veryhighuv{
+    background-color: red;
+}
