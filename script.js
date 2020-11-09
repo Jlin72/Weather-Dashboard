@@ -7,12 +7,14 @@ var uvEl = $("#UV");
 var imgEl=$("#wicon");
 var uvSpanEl=$("#uvspan");
 var forecast=$(".forecast");
+var searchBtn=$("#searchBtn");
+var cityInput=$("#cityinput");
 var apiKey= "dc73b9f2be92cd0a2da9c582e9770b1c";
 var city="mississauga";
-var requestUrl= "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid="+ apiKey; //API URL for the openweather API.
 
 $(document).ready(function() {
     function currentWeather() {
+        var requestUrl= "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid="+ apiKey; //API URL for the openweather API.
         fetch(requestUrl) // starting a fetch request for the openweather APi
         .then (function(response){
             console.log("there is a ", response) //this line of code is used to confirm if there is a response from the fetch request.
@@ -22,7 +24,7 @@ $(document).ready(function() {
             console.log(data);
             var temperatureF=Math.round((((data.main.temp-273.15)*1.8)+32)*10)/10; // this variable is used to convert the temperature from kelvin to fahrenheit and round it to one decimal.
             var currentYear = new Date().getFullYear(); // This variable will be used to store the current year.
-            var currentMonth = new Date().getMonth(); // This variable will be used to store the current month.
+            var currentMonth = new Date().getMonth() + 1; // This variable will be used to store the current month.
             var currentDay = new Date().getDate(); // This variable will be used to store the current day.
             var latitute = data.coord.lat; // This variable will be used to store the latitude of the current city.
             var longitude = data.coord.lon; // This variable will be used to store the longitude of the current city.
@@ -64,7 +66,7 @@ $(document).ready(function() {
             })
             .then(function(data) {
                 console.log(data);
-                for (i=0;i<5;i+=1) {
+                for (i=0;i<5;i++) {
                     var forecastIndex = i*8 + 4;
                     var indexDate=new Date(data.list[forecastIndex].dt*1000); //transform the dt from the API to a day, month and year format.
                     var futureDay = indexDate.getDate(); //This line is used to get the current date
@@ -74,7 +76,7 @@ $(document).ready(function() {
                     forecastDiv.addClass("col bg-primary text-white ml-3 ml-b rounded");
                     forecast.append(forecastDiv); //append the new div to the div with a forecast class
                     var forecastP = $("<p>");  //Create a new p html element that will be used to contain the date.
-                    forecastP.text(futureDay+"/"+futureMonth+"/"+futureYear); //this line will be used to give the new p html element the different days.
+                    forecastP.text(futureMonth+"/"+futureDay+"/"+futureYear); //this line will be used to give the new p html element the different days.
                     forecastP.addClass("dayforecast"); //add a class of dayforecast for the new p html element.
                     var forecastImg = $("<img>"); //Create a new img html element
                     forecastImg.attr("src", "https://openweathermap.org/img/wn/"+data.list[forecastIndex].weather[0].icon+".png") //this line of code will add a src for the image tag. This is done to obtain the icon for the weather from the openweather API.
@@ -92,5 +94,14 @@ $(document).ready(function() {
         })
         
     }
-    currentWeather()
+    currentWeather();
+
+    $("#searchBtn").on("click", function() {
+        console.log("hello");
+        city=$(cityInput).val();
+        console.log(city);
+        $(".forecast").empty();
+        localStorage.setItem('city', city);
+        currentWeather();
+    })
 })
