@@ -92,16 +92,17 @@ $(document).ready(function() {
                 }
             })
         })
-        
     }
     currentWeather();
-
     $("#searchBtn").on("click", function() {
         console.log("hello");
-        city=$(cityInput).val();
+        localStorage.setItem("city", $(cityInput).val());
+        cityParse=(localStorage.getItem("city"));
+        city=cityParse;
         console.log(city);
         $(".forecast").empty();
-        localStorage.setItem('city', city);
         currentWeather();
     })
+
+   
 })
